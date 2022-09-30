@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:movie_app/movie.model.dart';
 
 class SearchController with ChangeNotifier {
   String searchText = '';
-  List<String> namesList = [];
-  List<String> searchList = [];
+  List<MovieResultsModel> namesList = [];
+  List<MovieResultsModel> searchList = [];
   updateSearchText(value) {
     searchText = value;
     notifyListeners();
   }
 
-  updateSearchList(List<String> names) {
+  updateSearchList(List<MovieResultsModel> names) {
     searchList = names;
     notifyListeners();
   }

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:movie_app/demo.screen.dart';
+import 'package:movie_app/movie.service.dart';
 import 'package:provider/provider.dart';
 
 import 'homepage.screen.dart';
@@ -17,6 +19,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => SearchController()),
+        ChangeNotifierProvider(create: (_) => MovieService()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -25,6 +28,7 @@ class MyApp extends StatelessWidget {
         routes: {
           '/': (context) => MoviesHomePage(),
           '/search': (context) => MovieSearch(),
+          '/test': (context) => DemoScreen(),
         },
       ),
     );

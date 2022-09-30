@@ -4,6 +4,7 @@ import 'package:movie_app/search.controller.dart';
 import 'package:movie_app/search.screen.dart';
 import 'package:movie_app/text.widget.dart';
 import 'package:provider/provider.dart';
+import 'movie.service.dart';
 import 'moviecard.widget.dart';
 
 class MoviesHomePage extends StatelessWidget {
@@ -23,9 +24,12 @@ class MoviesHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final searchPvr = Provider.of<SearchController>(context, listen: false);
+    context.read<MovieService>().getPopularMovies();
+    final movieList = Provider.of<MovieService>(context, listen: false);
+
     Future.delayed(Duration.zero, () {
-      searchPvr.updateSearchList(names);
-      searchPvr.namesList = names;
+      searchPvr.updateSearchList(movieList.movieList);
+      searchPvr.namesList = movieList.movieList;
     });
 
     return Scaffold(
@@ -34,6 +38,13 @@ class MoviesHomePage extends StatelessWidget {
         backgroundColor: Colors.white,
         elevation: 1,
         title: displayText("The Movie"),
+        actions: [
+          IconButton(
+              onPressed: () {
+                Navigator.pushNamed(context, '/test');
+              },
+              icon: Icon(Icons.home))
+        ],
       ),
       body: SingleChildScrollView(
           padding: const EdgeInsets.all(14),
@@ -54,12 +65,13 @@ class MoviesHomePage extends StatelessWidget {
                             cursorColor: Colors.black,
                             onChanged: (value) {
                               searchCtr.updateSearchText(value);
-                              List<String> newList = [];
+                              List<MovieResultsModel> newList = [];
 
                               for (var i = 0;
                                   i < searchCtr.namesList.length;
                                   i++) {
-                                if (searchCtr.namesList[i]
+                                if (searchCtr.namesList[i].title!
+                                    .toLowerCase()
                                     .toLowerCase()
                                     .contains(value.toLowerCase())) {
                                   newList.add(searchCtr.namesList[i]);
@@ -134,8 +146,8 @@ class MoviesHomePage extends StatelessWidget {
                           itemBuilder: (context, index) {
                             return displaymovieCard(
                               image:
-                                  "https://images.unsplash.com/photo-1608186336271-53313eeaf864?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80",
-                              moviename: searchCtr.searchList[index],
+                                  "https://image.tmdb.org/t/p/w500/${searchCtr.searchList[index].backdropPath}",
+                              moviename: searchCtr.searchList[index].title,
                             );
                           },
                         )
@@ -154,106 +166,3 @@ class MoviesHomePage extends StatelessWidget {
     );
   }
 }
-
-const names = [
-  "Camila	Chapman",
-  "Belinda	Cameron",
-  "Amelia	Harris",
-  "Aldus	Howard",
-  "Mike	Ryan",
-  "Adelaide	Perry",
-  "Derek	Hall",
-  "Cherry	Ryan",
-  "Derek	Owens",
-  "John	Walker",
-  "Belinda	Ferguson",
-  "Vanessa	Barrett",
-  "Julian	Foster",
-  "Jasmine	Evans",
-  "Sabrina	Hunt",
-  "Deanna	Carroll",
-  "Hailey	Murray",
-  "Maximilian	Crawford",
-  "Grace	Wright",
-  "Garry	Murphy",
-  "Catherine	Ferguson",
-  "Amelia	Watson",
-  "Alisa	Baker",
-  "Maria	Miller",
-  "Daisy	Harper",
-  "Michelle	West",
-  "Caroline	Taylor",
-  "Heather	West",
-  "Justin	Lloyd",
-  "Lydia	Cameron",
-  "Daryl	Harris",
-  "Tara	Robinson",
-  "Haris	Wells",
-  "Emily	Scott",
-  "Catherine	Wells",
-  "Ned	Murphy",
-  "Blake	Casey",
-  "Chelsea	Mitchell",
-  "Stuart	Reed",
-  "Ellia	Jones",
-  "Florrie	Lloyd",
-  "Blake	Barnes",
-  "Jack	Cole",
-  "Adele	Henderson",
-  "Jessica	Rogers",
-  "Florrie	Barrett",
-  "Ryan	Owens",
-  "Briony	Dixon",
-  "Alexander	Cole",
-  "Jessica	Casey",
-  "Ryan	Grant",
-  "Emily	Fowler",
-  "Edith	Turner",
-  "Max	Payne",
-  "Melanie	Davis",
-  "Lucas	Mitchell",
-  "Aldus	Warren",
-  "Ashton	Kelley",
-  "Frederick	Armstrong",
-  "Chester	Smith",
-  "Alissa	Riley",
-  "Bruce	Rogers",
-  "Edgar	Armstrong",
-  "Cadie	Cooper",
-  "Ryan	Scott",
-  "Rebecca	Campbell",
-  "Rebecca	Parker",
-  "Grace	Bennett",
-  "Alen	Cunningham",
-  "Lucia	Douglas",
-  "Sydney	Allen",
-  "Roland	Cole",
-  "Eddy	Lloyd",
-  "Haris	Murphy",
-  "Fiona	Farrell",
-  "Honey	Jones",
-  "Edward	Watson",
-  "Ada	Harris",
-  "Jordan	Owens",
-  "Carlos	Stevens",
-  "Alissa	Howard",
-  "Madaline	Smith",
-  "Luke	Carroll",
-  "Paul	Campbell",
-  "Adrian	Murray",
-  "Ashton	Brown",
-  "Ned	Harris",
-  "Michelle	Thomas",
-  "Ted	Evans",
-  "Adelaide	Hawkins",
-  "Sydney	Hall",
-  "Arnold	Ross",
-  "Clark	Stewart",
-  "Carl	Smith",
-  "Vivian	Watson",
-  "Sam	Wells",
-  "Arnold	Stevens",
-  "Vivian	Miller",
-  "John	Hawkins",
-  "Edgar	Payne",
-];
