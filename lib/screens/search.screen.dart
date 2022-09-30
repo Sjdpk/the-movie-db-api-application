@@ -146,7 +146,8 @@ class MovieSearch extends StatelessWidget {
                             var searchList =
                                 prefs.getStringList('recentsearchlist') ?? [];
                             searchList.removeWhere(
-                              (item) => item == snapshotData[index],
+                              (item) =>
+                                  item == recentCtr.recentSearchList[index],
                             );
                             prefs.setStringList('recentsearchlist', searchList);
                             // update provider list
