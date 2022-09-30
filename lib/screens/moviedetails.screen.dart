@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:movie_app/movie.model.dart';
-import 'package:movie_app/text.widget.dart';
+import 'package:movie_app/models/movie.model.dart';
+import 'package:movie_app/widgets/text.widget.dart';
 
 class MovieDetailsScreen extends StatelessWidget {
   final MovieResultsModel movieResultsModel;

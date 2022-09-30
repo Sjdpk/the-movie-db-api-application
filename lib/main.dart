@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:movie_app/searchdetails.screen.dart';
-import 'package:movie_app/movie.service.dart';
+import 'package:movie_app/screens/searchdetails.screen.dart';
+import 'package:movie_app/controllers/movie.service.dart';
 import 'package:provider/provider.dart';
 
-import 'homepage.screen.dart';
-import 'search.controller.dart';
-import 'search.screen.dart';
+import 'screens/homepage.screen.dart';
+import 'controllers/search.controller.dart';
+import 'screens/search.screen.dart';
 
 void main() {
   runApp(MyApp());

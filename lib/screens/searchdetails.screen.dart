@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:movie_app/movie.service.dart';
-import 'package:movie_app/text.widget.dart';
+import 'package:movie_app/controllers/movie.service.dart';
+import 'package:movie_app/widgets/text.widget.dart';
 
-import 'moviecard.widget.dart';
+import '../widgets/moviecard.widget.dart';
 import 'moviedetails.screen.dart';
 
 class DemoScreen extends StatelessWidget {

@@ -1,8 +1,8 @@
 import 'dart:convert';
-import './.env.dart';
+import '../congig/.env.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:movie_app/movie.model.dart';
+import 'package:movie_app/models/movie.model.dart';
 
 const baseurl = "https://api.themoviedb.org/3";
 const apiKey = APIKEY;

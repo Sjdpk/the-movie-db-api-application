@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:movie_app/searchdetails.screen.dart';
-import 'package:movie_app/search.controller.dart';
-import 'package:movie_app/text.widget.dart';
+import 'package:movie_app/screens/searchdetails.screen.dart';
+import 'package:movie_app/controllers/search.controller.dart';
+import 'package:movie_app/widgets/text.widget.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

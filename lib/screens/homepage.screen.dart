@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:movie_app/movie.model.dart';
-import 'package:movie_app/moviedetails.screen.dart';
-import 'package:movie_app/search.controller.dart';
-import 'package:movie_app/text.widget.dart';
+import 'package:movie_app/models/movie.model.dart';
+import 'package:movie_app/screens/moviedetails.screen.dart';
+import 'package:movie_app/controllers/search.controller.dart';
+import 'package:movie_app/widgets/text.widget.dart';
 import 'package:provider/provider.dart';
-import 'movie.service.dart';
-import 'moviecard.widget.dart';
+import '../controllers/movie.service.dart';
+import '../widgets/moviecard.widget.dart';
 
 class MoviesHomePage extends StatelessWidget {
   MoviesHomePage({super.key});
