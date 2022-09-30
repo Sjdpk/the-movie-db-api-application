@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import 'homepage.screen.dart';
+import 'search.controller.dart';
 
 void main() {
   runApp(MyApp());
@@ -11,8 +13,13 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: MoviesHomePage(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => SearchController()),
+      ],
+      child: MaterialApp(
+        home: MoviesHomePage(),
+      ),
     );
   }
 }
