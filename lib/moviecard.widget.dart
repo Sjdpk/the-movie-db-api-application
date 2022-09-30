@@ -13,7 +13,6 @@ displaymovieCard({
   String? image,
   moviename,
 }) {
-  print("Oooooooooook $moviename");
   final loadingWidget = Container(
     alignment: Alignment.center,
     height: imageHeight,

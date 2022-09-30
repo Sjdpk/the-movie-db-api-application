@@ -1,11 +1,11 @@
 import 'dart:convert';
-import 'dart:developer';
+import './.env.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:movie_app/movie.model.dart';
 
 const baseurl = "https://api.themoviedb.org/3";
-const apiKey = "369e5acb198bc1ec9e58a6a4d9582ecd";
+const apiKey = APIKEY;
 
 class MovieService with ChangeNotifier {
   bool _isLoading = false;
@@ -21,18 +21,14 @@ class MovieService with ChangeNotifier {
   set searchListSet(List<MovieResultsModel> movieList) =>
       _recentSearchList = [];
   // @desc get popular movie
-  Future getPopularMovies({String searchQuery = ""}) async {
+  Future getPopularMovies() async {
     List<MovieResultsModel> movieListModelData = [];
     List<MovieResultsModel> searchMovieListModelData = [];
     try {
       const popularMovieUrl =
           "/movie/popular?api_key=$apiKey&language=en-US&page=1";
-      final searchUrl =
-          "/search/movie?api_key=$apiKey&language=en-US&query=$searchQuery&page=1&include_adult=false";
-      final finalUrl =
-          searchQuery == "" ? baseurl + popularMovieUrl : baseurl + searchUrl;
+      const finalUrl = baseurl + popularMovieUrl;
       final response = await http.get(Uri.parse(finalUrl));
-      log(response.body.toString());
       if (response.statusCode == 200) {
         final movieList = json.decode(response.body);
         notifyListeners();
@@ -40,11 +36,7 @@ class MovieService with ChangeNotifier {
         for (var element in movieList['results']) {
           movieListModelData.add(MovieResultsModel.fromJson(element));
         }
-        if (searchQuery != "") {
-          _recentSearchList = searchMovieListModelData;
-        } else {
-          _movieList = movieListModelData;
-        }
+        _movieList = movieListModelData;
 
         notifyListeners();
       } else {

@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:movie_app/demo.screen.dart';
+import 'package:movie_app/searchdetails.screen.dart';
 import 'package:movie_app/search.controller.dart';
 import 'package:movie_app/text.widget.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class MovieSearch extends StatelessWidget {
   MovieSearch({super.key});
   final searchController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     final searchPvr = Provider.of<SearchController>(context, listen: false);
@@ -34,16 +36,24 @@ class MovieSearch extends StatelessWidget {
                         onChanged: (value) {
                           searchPvr.updateSearchText(value);
                         },
-                        onFieldSubmitted: (value) {
+                        onFieldSubmitted: (value) async {
                           if (value != "") {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (_) => DemoScreen(
-                                  searchQuery: value.toLowerCase(),
+                            // Obtain shared preferences.
+                            final prefs = await SharedPreferences.getInstance();
+                            var recentSearchList =
+                                prefs.getStringList('recentsearchlist') ?? [];
+
+                            await prefs.setStringList('recentsearchlist',
+                                [...recentSearchList, value]).then((_) {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (_) => DemoScreen(
+                                    searchQuery: value.toLowerCase(),
+                                  ),
                                 ),
-                              ),
-                            );
+                              );
+                            });
                           }
                         },
                         controller: searchController,
@@ -94,25 +104,56 @@ class MovieSearch extends StatelessWidget {
           ),
         ),
       ),
-      body: ListView.builder(
-        itemCount: 4,
-        shrinkWrap: true,
-        physics: ScrollPhysics(),
-        itemBuilder: (context, index) {
-          return ListTile(
-            onTap: () {},
-            leading: const Icon(Icons.access_time),
-            trailing: IconButton(
-              onPressed: () {},
-              icon: const Icon(
-                Icons.clear,
-                color: Colors.black,
-              ),
-            ),
-            title: displayText("Avatar 2.0"),
-          );
+      body: FutureBuilder(
+        future: getRecentSearch(),
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+          try {
+            if (snapshot.hasData) {
+              final snapshotData = snapshot.data;
+              // return Text(snapshotData.toString());
+              return ListView.builder(
+                itemCount: snapshotData.length,
+                shrinkWrap: true,
+                physics: const ScrollPhysics(),
+                itemBuilder: (context, index) {
+                  return ListTile(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => DemoScreen(
+                            searchQuery: snapshotData[index].toString(),
+                          ),
+                        ),
+                      );
+                    },
+                    leading: const Icon(Icons.access_time),
+                    trailing: IconButton(
+                      onPressed: () {},
+                      icon: const Icon(
+                        Icons.clear,
+                        color: Colors.black,
+                      ),
+                    ),
+                    title: displayText(snapshotData[index].toString()),
+                  );
+                },
+              );
+            } else {
+              return const SizedBox.shrink();
+            }
+          } catch (e) {
+            rethrow;
+          }
         },
       ),
     );
   }
+}
+
+getRecentSearch() async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  // get the list, if not found, return empty list.
+  var recentSearchList = prefs.getStringList('recentsearchlist') ?? [];
+  return recentSearchList;
 }
