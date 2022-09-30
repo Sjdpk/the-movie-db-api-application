@@ -133,7 +133,8 @@ class MovieSearch extends StatelessWidget {
                             context,
                             MaterialPageRoute(
                               builder: (_) => DemoScreen(
-                                searchQuery: snapshotData[index].toString(),
+                                searchQuery: recentCtr.recentSearchList[index]
+                                    .toString(),
                               ),
                             ),
                           );
