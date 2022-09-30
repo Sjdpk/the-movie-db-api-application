@@ -43,11 +43,15 @@ class MovieSearch extends StatelessWidget {
                             var recentSearchList =
                                 prefs.getStringList('recentsearchlist') ?? [];
 
-                            await prefs.setStringList('recentsearchlist',
-                                [...recentSearchList, value]).then((_) {
+                            await prefs
+                                .setStringList('recentsearchlist',
+                                    {...recentSearchList, value}.toList())
+                                .then((_) {
                               // update provider list
+
                               searchPvr.updateRecentSearchList(
-                                  recentSearch: [...recentSearchList, value]);
+                                  recentSearch:
+                                      {...recentSearchList, value}.toList());
 
                               // send to next page
                               Navigator.push(

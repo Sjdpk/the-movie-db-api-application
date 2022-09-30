@@ -60,13 +60,19 @@ class DemoScreen extends StatelessWidget {
                 },
               );
             } else {
-              return Center(
-                child: CircularProgressIndicator(),
+              return const Center(
+                child: CircularProgressIndicator(
+                  backgroundColor: Colors.black,
+                  color: Colors.white,
+                ),
               );
             }
           } catch (e) {
-            return Center(
-              child: const CircularProgressIndicator(),
+            return const Center(
+              child: CircularProgressIndicator(
+                backgroundColor: Colors.black,
+                color: Colors.white,
+              ),
             );
           }
         },
