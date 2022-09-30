@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 
 import 'homepage.screen.dart';
 import 'search.controller.dart';
+import 'search.screen.dart';
 
 void main() {
   runApp(MyApp());
@@ -18,7 +19,13 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => SearchController()),
       ],
       child: MaterialApp(
-        home: MoviesHomePage(),
+        debugShowCheckedModeBanner: false,
+        // home: MoviesHomePage(),
+        initialRoute: '/',
+        routes: {
+          '/': (context) => MoviesHomePage(),
+          '/search': (context) => MovieSearch(),
+        },
       ),
     );
   }

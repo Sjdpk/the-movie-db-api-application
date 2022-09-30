@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:movie_app/movie.model.dart';
 import 'package:movie_app/search.controller.dart';
+import 'package:movie_app/search.screen.dart';
 import 'package:movie_app/text.widget.dart';
 import 'package:provider/provider.dart';
 import 'moviecard.widget.dart';
@@ -27,7 +29,12 @@ class MoviesHomePage extends StatelessWidget {
     });
 
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        foregroundColor: Colors.black,
+        backgroundColor: Colors.white,
+        elevation: 1,
+        title: displayText("The Movie"),
+      ),
       body: SingleChildScrollView(
           padding: const EdgeInsets.all(14),
           child: Consumer<SearchController>(
@@ -62,17 +69,6 @@ class MoviesHomePage extends StatelessWidget {
                               if (value == "") {
                                 searchCtr.updateSearchList(searchCtr.namesList);
                               }
-
-                              // List<String> newUserList = searchPvr.namesList;
-                              // for (var i = 0;
-                              //     i < searchCtr.namesList.length;
-                              //     i++) {
-                              //   if (searchCtr.namesList[i]
-                              //       .toLowerCase()
-                              //       .contains(value.toLowerCase())) {
-                              //     searchPvr.updateNameList(searchCtr.namesList);
-                              //   }
-                              // }
                             },
                             decoration: InputDecoration(
                               suffixIcon: IconButton(
@@ -101,18 +97,23 @@ class MoviesHomePage extends StatelessWidget {
                           ),
                         ),
                       ),
-                      Container(
-                        height: 40,
-                        padding: const EdgeInsets.all(7),
-                        decoration: decoration,
-                        child: const Icon(Icons.search),
+                      InkWell(
+                        onTap: () async {
+                          Navigator.pushNamed(context, '/search');
+                        },
+                        child: Container(
+                          height: 40,
+                          padding: const EdgeInsets.all(7),
+                          decoration: decoration,
+                          child: const Icon(Icons.search),
+                        ),
                       )
                     ],
                   ),
                   displayText(
                     searchCtr.searchText == ""
                         ? "Popular Movies"
-                        : "Popular Movies",
+                        : "Movie Searches",
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
                     bottomPadding: 14,

@@ -1,73 +1,100 @@
 import 'package:flutter/material.dart';
+import 'package:movie_app/search.controller.dart';
+import 'package:movie_app/text.widget.dart';
+import 'package:provider/provider.dart';
 
-class MovieSearch extends SearchDelegate<String> {
-  final List<String> names;
-  String? result;
-
-  MovieSearch(this.names);
-
+class MovieSearch extends StatelessWidget {
+  MovieSearch({super.key});
+  final searchController = TextEditingController();
   @override
-  List<Widget> buildActions(BuildContext context) {
-    return [
-      IconButton(
-        icon: Icon(Icons.clear),
-        onPressed: () {
-          query = '';
+  Widget build(BuildContext context) {
+    final searchPvr = Provider.of<SearchController>(context, listen: false);
+    searchPvr.searchText = "";
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        foregroundColor: Colors.black,
+        centerTitle: true,
+        elevation: 0,
+        title: displayText("Search"),
+        bottom: PreferredSize(
+          preferredSize: const Size.fromHeight(120),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                height: 60,
+                padding: const EdgeInsets.all(8.0),
+                child: Consumer<SearchController>(
+                  builder: (context, value, child) {
+                    return ClipRRect(
+                      borderRadius: BorderRadius.circular(6),
+                      child: TextFormField(
+                        controller: searchController,
+                        decoration: InputDecoration(
+                          hintText: 'search movies',
+                          prefixIcon: IconButton(
+                            onPressed: () {},
+                            icon: const Icon(
+                              Icons.search,
+                              color: Colors.grey,
+                            ),
+                          ),
+                          suffixIcon: IconButton(
+                            onPressed: () {
+                              searchController.clear();
+                            },
+                            icon: const Icon(
+                              Icons.clear,
+                              color: Colors.black,
+                            ),
+                          ),
+                          filled: true,
+                          fillColor: const Color(0xffd2d3f1),
+                          contentPadding: const EdgeInsets.only(top: 10),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(6),
+                            borderSide:
+                                const BorderSide(color: Color(0xffd2d3f1)),
+                          ),
+                          border: InputBorder.none,
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ),
+              displayText(
+                "Recent Searches",
+                leftPadding: 14,
+                topPadding: 30,
+                bottomPadding: 10,
+                fontWeight: FontWeight.w500,
+                fontSize: 18,
+              )
+            ],
+          ),
+        ),
+      ),
+      body: ListView.builder(
+        itemCount: 4,
+        shrinkWrap: true,
+        physics: ScrollPhysics(),
+        itemBuilder: (context, index) {
+          return ListTile(
+            onTap: () {},
+            leading: const Icon(Icons.access_time),
+            trailing: IconButton(
+              onPressed: () {},
+              icon: const Icon(
+                Icons.clear,
+                color: Colors.black,
+              ),
+            ),
+            title: displayText("Avatar 2.0"),
+          );
         },
-      )
-    ];
-  }
-
-  @override
-  Widget buildLeading(BuildContext context) {
-    return IconButton(
-      icon: Icon(Icons.arrow_back),
-      onPressed: () {
-        close(context, result!);
-      },
-    );
-  }
-
-  @override
-  Widget buildResults(BuildContext context) {
-    final suggestions = names.where((name) {
-      return name.toLowerCase().contains(query.toLowerCase());
-    });
-
-    return ListView.builder(
-      itemCount: suggestions.length,
-      itemBuilder: (BuildContext context, int index) {
-        return ListTile(
-          title: Text(
-            suggestions.elementAt(index),
-          ),
-          onTap: () {
-            result = suggestions.elementAt(index);
-            close(context, result!);
-          },
-        );
-      },
-    );
-  }
-
-  @override
-  Widget buildSuggestions(BuildContext context) {
-    final suggestions = names.where((name) {
-      return name.toLowerCase().contains(query.toLowerCase());
-    });
-
-    return ListView.builder(
-      itemCount: suggestions.length,
-      itemBuilder: (BuildContext context, int index) {
-        return ListTile(
-          title: Text(
-            suggestions.elementAt(index),
-          ),
-          onTap: () {
-            query = suggestions.elementAt(index);
-          },
-        );
-      },
+      ),
     );
   }
 }
