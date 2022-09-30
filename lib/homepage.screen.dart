@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:movie_app/movie.model.dart';
+import 'package:movie_app/moviedetails.screen.dart';
 import 'package:movie_app/search.controller.dart';
 import 'package:movie_app/search.screen.dart';
 import 'package:movie_app/text.widget.dart';
@@ -144,10 +145,23 @@ class MoviesHomePage extends StatelessWidget {
                           ),
                           itemCount: searchCtr.searchList.length,
                           itemBuilder: (context, index) {
-                            return displaymovieCard(
-                              image:
-                                  "https://image.tmdb.org/t/p/w500/${searchCtr.searchList[index].backdropPath}",
-                              moviename: searchCtr.searchList[index].title,
+                            return InkWell(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (_) => MovieDetailsScreen(
+                                      movieResultsModel:
+                                          searchCtr.searchList[index],
+                                    ),
+                                  ),
+                                );
+                              },
+                              child: displaymovieCard(
+                                image:
+                                    "https://image.tmdb.org/t/p/w500/${searchCtr.searchList[index].backdropPath}",
+                                moviename: searchCtr.searchList[index].title,
+                              ),
                             );
                           },
                         )
