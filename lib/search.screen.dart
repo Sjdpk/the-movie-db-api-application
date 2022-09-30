@@ -129,7 +129,16 @@ class MovieSearch extends StatelessWidget {
                     },
                     leading: const Icon(Icons.access_time),
                     trailing: IconButton(
-                      onPressed: () {},
+                      onPressed: () async {
+                        SharedPreferences prefs =
+                            await SharedPreferences.getInstance();
+                        var searchList =
+                            prefs.getStringList('recentsearchlist') ?? [];
+                        searchList.removeWhere(
+                          (item) => item == snapshotData[index],
+                        );
+                        prefs.setStringList('recentsearchlist', searchList);
+                      },
                       icon: const Icon(
                         Icons.clear,
                         color: Colors.black,
