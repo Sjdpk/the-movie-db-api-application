@@ -45,6 +45,11 @@ class MovieSearch extends StatelessWidget {
 
                             await prefs.setStringList('recentsearchlist',
                                 [...recentSearchList, value]).then((_) {
+                              // update provider list
+                              searchPvr.updateRecentSearchList(
+                                  recentSearch: [...recentSearchList, value]);
+
+                              // send to next page
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
@@ -105,46 +110,55 @@ class MovieSearch extends StatelessWidget {
         ),
       ),
       body: FutureBuilder(
-        future: getRecentSearch(),
+        future: getRecentSearch(context: context),
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           try {
             if (snapshot.hasData) {
               final snapshotData = snapshot.data;
               // return Text(snapshotData.toString());
-              return ListView.builder(
-                itemCount: snapshotData.length,
-                shrinkWrap: true,
-                physics: const ScrollPhysics(),
-                itemBuilder: (context, index) {
-                  return ListTile(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (_) => DemoScreen(
-                            searchQuery: snapshotData[index].toString(),
+              return Consumer<SearchController>(
+                builder: (context, recentCtr, child) {
+                  return ListView.builder(
+                    itemCount: recentCtr.recentSearchList.length,
+                    shrinkWrap: true,
+                    physics: const ScrollPhysics(),
+                    itemBuilder: (context, index) {
+                      return ListTile(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) => DemoScreen(
+                                searchQuery: snapshotData[index].toString(),
+                              ),
+                            ),
+                          );
+                        },
+                        leading: const Icon(Icons.access_time),
+                        trailing: IconButton(
+                          onPressed: () async {
+                            SharedPreferences prefs =
+                                await SharedPreferences.getInstance();
+                            var searchList =
+                                prefs.getStringList('recentsearchlist') ?? [];
+                            searchList.removeWhere(
+                              (item) => item == snapshotData[index],
+                            );
+                            prefs.setStringList('recentsearchlist', searchList);
+                            // update provider list
+                            searchPvr.updateRecentSearchList(
+                              recentSearch: searchList,
+                            );
+                          },
+                          icon: const Icon(
+                            Icons.clear,
+                            color: Colors.black,
                           ),
                         ),
+                        title: displayText(
+                            recentCtr.recentSearchList[index].toString()),
                       );
                     },
-                    leading: const Icon(Icons.access_time),
-                    trailing: IconButton(
-                      onPressed: () async {
-                        SharedPreferences prefs =
-                            await SharedPreferences.getInstance();
-                        var searchList =
-                            prefs.getStringList('recentsearchlist') ?? [];
-                        searchList.removeWhere(
-                          (item) => item == snapshotData[index],
-                        );
-                        prefs.setStringList('recentsearchlist', searchList);
-                      },
-                      icon: const Icon(
-                        Icons.clear,
-                        color: Colors.black,
-                      ),
-                    ),
-                    title: displayText(snapshotData[index].toString()),
                   );
                 },
               );
@@ -160,9 +174,13 @@ class MovieSearch extends StatelessWidget {
   }
 }
 
-getRecentSearch() async {
+getRecentSearch({required BuildContext context}) async {
+  final searchPvr = Provider.of<SearchController>(context, listen: false);
+
   SharedPreferences prefs = await SharedPreferences.getInstance();
   // get the list, if not found, return empty list.
   var recentSearchList = prefs.getStringList('recentsearchlist') ?? [];
+  searchPvr.updateRecentSearchList(recentSearch: recentSearchList);
+
   return recentSearchList;
 }
