@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:movie_app/controllers/movie.service.dart';
+import 'package:movie_app/controllers/movie.controller.dart';
 import 'package:movie_app/widgets/text.widget.dart';
 
 import '../widgets/moviecard.widget.dart';
 import 'moviedetails.screen.dart';
 
-class DemoScreen extends StatelessWidget {
+class SearchDetailsScreen extends StatelessWidget {
   final String searchQuery;
-  const DemoScreen({Key? key, this.searchQuery = ""}) : super(key: key);
+  const SearchDetailsScreen({Key? key, this.searchQuery = ""})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +23,8 @@ class DemoScreen extends StatelessWidget {
         title: displayText(searchQuery),
       ),
       body: FutureBuilder(
-        future: MovieService().getSearchMovie(searchQuery: searchQuery),
+        future:
+            MovieServiceController().getSearchMovie(searchQuery: searchQuery),
         builder: (context, snapshot) {
           try {
             if (snapshot.hasData) {

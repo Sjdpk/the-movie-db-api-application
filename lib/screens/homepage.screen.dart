@@ -6,7 +6,7 @@ import 'package:movie_app/screens/moviedetails.screen.dart';
 import 'package:movie_app/controllers/search.controller.dart';
 import 'package:movie_app/widgets/text.widget.dart';
 import 'package:provider/provider.dart';
-import '../controllers/movie.service.dart';
+import '../controllers/movie.controller.dart';
 import '../widgets/moviecard.widget.dart';
 
 class MoviesHomePage extends StatelessWidget {
@@ -26,8 +26,9 @@ class MoviesHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final searchPvr = Provider.of<SearchController>(context, listen: false);
-    final movieList = Provider.of<MovieService>(context, listen: false);
-    context.read<MovieService>().getPopularMovies().then((_) {
+    final movieList =
+        Provider.of<MovieServiceController>(context, listen: false);
+    context.read<MovieServiceController>().getPopularMovies().then((_) {
       Future.delayed(Duration.zero, () {
         searchPvr.updateSearchList(movieList.movieList);
         searchPvr.namesList = movieList.movieList;
@@ -55,7 +56,7 @@ class MoviesHomePage extends StatelessWidget {
                 //     .read<MovieService>()
                 //     .getPopularMovies(currentPage: currentPage);
                 context
-                    .read<MovieService>()
+                    .read<MovieServiceController>()
                     .getPopularMovies(currentPage: currentPage)
                     .then((_) {
                   Future.delayed(Duration.zero, () {

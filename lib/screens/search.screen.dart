@@ -57,7 +57,7 @@ class MovieSearch extends StatelessWidget {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (_) => DemoScreen(
+                                  builder: (_) => SearchDetailsScreen(
                                     searchQuery: value.toLowerCase(),
                                   ),
                                 ),
@@ -118,11 +118,12 @@ class MovieSearch extends StatelessWidget {
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           try {
             if (snapshot.hasData) {
-              final snapshotData = snapshot.data;
+              // final snapshotData = snapshot.data;
               // return Text(snapshotData.toString());
               return Consumer<SearchController>(
                 builder: (context, recentCtr, child) {
                   return ListView.builder(
+                    reverse: true,
                     itemCount: recentCtr.recentSearchList.length,
                     shrinkWrap: true,
                     physics: const ScrollPhysics(),
@@ -132,7 +133,7 @@ class MovieSearch extends StatelessWidget {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (_) => DemoScreen(
+                              builder: (_) => SearchDetailsScreen(
                                 searchQuery: recentCtr.recentSearchList[index]
                                     .toString(),
                               ),

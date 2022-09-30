@@ -39,7 +39,7 @@ class MovieDetailsScreen extends StatelessWidget {
             movieResultsModel.overview.toString(),
             textAlign: TextAlign.justify,
           ),
-          SizedBox(
+          const SizedBox(
             height: 40,
           ),
           Row(
