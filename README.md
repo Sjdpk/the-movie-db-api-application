@@ -1,16 +1,26 @@
-# movie_app
+# TheMovie app
 
-A new Flutter project.
+A Flutter movie app build with Provider and TheMoviedb api.
 
-## Getting Started
+## About
 
-This project is a starting point for a Flutter application.
+Find The Latest trending and upcoming movies and tv shows with MovieDB app. 
+The app contains all info about movies and tv shows. find similar movies or 
+shows, Browse all genres, video trailers, backdrops, logos, and posters.
 
-A few resources to get you started if this is your first Flutter project:
+Note: App is updated to version 1.0.2 you can find other versions by changing branch or in release.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+#screenshot
+<div align="center">
+    <img src="https://github.com/Sjdpk/the-movie-db-api-application/blob/master/screenshots/home.jpg" width="400px"</img> 
+</div>
+<div align="center">
+    <img src="https://github.com/Sjdpk/the-movie-db-api-application/blob/master/screenshots/homesearch.jpg" width="400px"</img> 
+</div>
+<div align="center">
+    <img src="https://github.com/Sjdpk/the-movie-db-api-application/blob/master/screenshots/search.jpg" width="400px"</img> 
+</div>
+<div align="center">
+    <img src="https://github.com/Sjdpk/the-movie-db-api-application/blob/master/screenshots/searchsuggest.jpg" width="400px"</img> 
+</div>
