@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
         initialRoute: '/',
         routes: {
           '/': (context) => MoviesHomePage(),
-          '/search': (context) => MovieSearch(),
+          // '/search': (context) => MovieSearch(),
         },
       ),
     );

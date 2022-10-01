@@ -4,8 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:movie_app/models/movie.model.dart';
 import 'package:movie_app/screens/moviedetails.screen.dart';
 import 'package:movie_app/controllers/search.controller.dart';
+import 'package:movie_app/screens/search.screen.dart';
 import 'package:movie_app/widgets/text.widget.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../controllers/movie.controller.dart';
 import '../widgets/moviecard.widget.dart';
 
@@ -151,7 +153,20 @@ class MoviesHomePage extends StatelessWidget {
                               ),
                               InkWell(
                                 onTap: () async {
-                                  Navigator.pushNamed(context, '/search');
+                                  SharedPreferences prefs =
+                                      await SharedPreferences.getInstance();
+                                  // get the list, if not found, return empty list.
+                                  var recentSearchList =
+                                      prefs.getStringList('recentsearchlist') ??
+                                          [];
+                                  // ignore: use_build_context_synchronously
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (_) => MovieSearch(
+                                          autoSuggestionList: recentSearchList),
+                                    ),
+                                  );
                                 },
                                 child: Container(
                                   height: 40,
