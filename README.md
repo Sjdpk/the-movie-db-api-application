@@ -12,15 +12,19 @@ Note: App is updated to version 1.0.2 you can find other versions by changing br
 
 
 #screenshot
-<div align="center">
-    <img src="https://github.com/Sjdpk/the-movie-db-api-application/blob/master/screenshots/home.jpg" width="400px"</img> 
-</div>
-<div align="center">
-    <img src="https://github.com/Sjdpk/the-movie-db-api-application/blob/master/screenshots/homesearch.jpg" width="400px"</img> 
-</div>
-<div align="center">
-    <img src="https://github.com/Sjdpk/the-movie-db-api-application/blob/master/screenshots/search.jpg" width="400px"</img> 
-</div>
-<div align="center">
-    <img src="https://github.com/Sjdpk/the-movie-db-api-application/blob/master/screenshots/searchsuggest.jpg" width="400px"</img> 
-</div>
+<table>
+  <tr>
+    <td>Home Screen Page</td>
+     <td>Home Search Mention</td>
+     <td>Search Screen page</td>
+     <td>Search Page Auto Sugession</td>
+  </tr>
+  <tr>
+    <td><img src="https://github.com/Sjdpk/the-movie-db-api-application/blob/master/screenshots/home.jpg" width=270 height=480></td>
+    <td><img src="https://github.com/Sjdpk/the-movie-db-api-application/blob/master/screenshots/homesearch.jpg" width=270 height=480></td>
+    <td><img src="https://github.com/Sjdpk/the-movie-db-api-application/blob/master/screenshots/search.jpg" width=270 height=480></td>
+    <td><img src="https://github.com/Sjdpk/the-movie-db-api-application/blob/master/screenshots/searchsuggest.jpg" width=270 height=480></td>
+      
+  </tr>
+ </table>
+
